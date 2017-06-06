@@ -167,7 +167,7 @@ sqrt for float use the built in sqrt function while sqrt for fixed point use  Ne
 | arm_sin_q31(TODO)      | 37 |  N/A| 43|
 
 
-#
+<!-- #
 
 #### Complex Math Functions
 
@@ -476,7 +476,7 @@ Init functions are not considered in benchmarking.
 | arm_bilinear_interp_f32 |1505| N/A| 189 |
 |  arm_bilinear_interp_q7 |81| N/A| 219 |
 | arm_bilinear_interp_q15  |132| N/A| 240 |
-|  arm_bilinear_interp_q31 |104| N/A| 226 |
+|  arm_bilinear_interp_q31 |104| N/A| 226 | -->
 
 #
 
