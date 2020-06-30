@@ -26,6 +26,7 @@
  * limitations under the License.
 
  Modifications 2017  Mostafa Saleh       (Ported to RISC-V PULPino)
+ Modifications 2020  Jia He       (Ported to RISC-V CL32Q0)
  */
 
 #include "riscv_math.h"

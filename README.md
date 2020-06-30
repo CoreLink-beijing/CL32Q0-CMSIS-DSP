@@ -1,6 +1,5 @@
-## CMSIS DSP for PULPino
-This is a port of ARM CMSIS DSP [library](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html) to [PULPino](https://github.com/pulp-platform/pulpino) microcontroller(RISC-V  RV32IMFD ISA with custom extensions).
-This [project](https://summerofcode.withgoogle.com/projects/#5599084384616448) is part of Google Summer of Code (GSoC) 2017
+## CMSIS DSP for CL32Q0
+This is a port of ARM CMSIS DSP [library](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html) to [CL32Q0](http://www.corelink.vip/jcdl_32wriscvtywkzq) microcontroller(RISC-V  RV32IMC ISA).
 
 #
 
@@ -8,27 +7,25 @@ The names of files and functions are renamed from arm to riscv. For example `arm
 
 #
 
-To use optimized functions with DSP extension, add `#define USE_DSP_RISCV` in riscv_math.h
+To use optimized functions with DSP extension, add `#define USE_DSP_RISCV` in riscv_math.h (TODO)
 
 #
 
-The library is already configured and integrated in the CMake files of PULPino in this [fork](https://github.com/misaleh/pulpino).
+The library is already configured and integrated in the Eclipse IDE files of CL32Q0 in this [CL32Q0-demo](https://github.com/CoreLink-beijing/CL32Q0-demo) or [CL32Q0-driver-library](https://github.com/CoreLink-beijing/CL32Q0-driver-library).
 
-For example, after configuring PULPino itself and installing required tools, you can simulate ` Benchmark_BasicMathFunctions1 ` by typing.
-
-  make Benchmark_BasicMathFunctions1.vsim
+For example, after configuring CL32Q0 itself and installing required tools, you can simulate ` Benchmark_BasicMathFunctions1 ` .
 
 #
 
 Note that some `Transform Fucntions` benchmarks needs more memory than the default (512kb instead of 32kb).
 
-To increase memory size, three files should be changed:
+To increase memory size, some files should be changed:
 
-* `rtl/core_region.sv`, where parameter `DATA_RAM_SIZE` changes the size of the RAM.
+* `CL32Q0-driver-library/gcc/link.riscv.ld`, the `dataram` size  and `stack` start address need to be changed in the linker script.
 
-* `sw/ref/link.common.ld`, the `dataram` size  and `stack` start address need to be changed in the linker script.
+* `CL32Q0-driver-library/utils/s19toslm.py`, which translates the compiler output to the format the testbench reads, `tcdm_bank_size` needs to be changed.
 
-* `sw/utils/s19toslm.py`, which translates the compiler output to the format the testbench reads, `tcdm_bank_size` needs to be changed.
+And change your chip to more powerful one.
 
 #
 
@@ -52,12 +49,12 @@ To increase memory size, three files should be changed:
 
 For each module:
 
-1. Port to PULPino.
+1. Port to CL32Q0.
 2. Test it.
 3. Benchmark basic implementation.
-4. Optimize the implementation with PULPino DSP extension.
+4. Optimize the implementation with CL32Q0 DSP extension.(TODO)
 5. Test it.
-6. Benchmark DSP implementation.
+6. Benchmark DSP implementation.(TODO)
 7. Benchmark ARM m4 and compare results.
 
 #
@@ -101,49 +98,49 @@ Improvements of DSP extension:
 
 These Benchmarks are performed on vectors of size 32.
 
-Results from PULPino were compared with results from ARM m4 and also were checked by hand.
+Results from CL32Q0 were compared with results from ARM m4 and also were checked by hand.
 
 
-| Function        | Puplino Cycles           | Puplino DSP Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
-| arm_abs_f32      | 133 | N/A| 221|
+| arm_abs_f32(TODO)      | 133 | N/A| 221|
 | arm_abs_q7      | 274 |  185(32.5%) | 297|
 | arm_abs_q15      | 224  |  187(16.5%)| 293|
 | arm_abs_q31      | 254  |  237(6.7%) | 282|
-| arm_add_f32      | 5310  | N/A | 295|
+| arm_add_f32(TODO)      | 5310  | N/A | 295|
 | arm_add_q7      | 373 | 340(8.8%)| 109|
 | arm_add_q15      | 403 | 192(52.4%)| 168|
-| arm_add_q31      | 543 | N/A | 290|
+| arm_add_q31(TODO)      | 543 | N/A | 290|
 | arm_dot_prod_q15      | 336 |187(44.3%)  |144 |
-| arm_dot_prod_q31      | 572 |  N/A|504 |
-| arm_dot_prod_f32      | 10009 | N/A | 311|
+| arm_dot_prod_q31(TODO)      | 572 |  N/A|504 |
+| arm_dot_prod_f32(TODO)      | 10009 | N/A | 311|
 | arm_dot_prod_q7      | 142 | 57(60%)  | 144|
-| arm_mult_f32      | 5149 | N/A | 295|
-| arm_mult_q31      | 751 |  N/A| 354|
+| arm_mult_f32(TODO)      | 5149 | N/A | 295|
+| arm_mult_q31(TODO)      | 751 |  N/A| 354|
 | arm_mult_q15      | 302 | 203(32.8%) | 238|
 | arm_mult_q7      |  302  | 235(22.2%) | 322 |
-| arm_negate_f32      | 143 | N/A | 221|
-| arm_negate_q7      | 124  |  N/A| 92|
+| arm_negate_f32(TODO)      | 143 | N/A | 221|
+| arm_negate_q7(TODO)      | 124  |  N/A| 92|
 | arm_negate_q15      | 192  |  187(2.6%)| 132|
-| arm_negate_q31      | 237  | N/A | 216|
-| arm_offset_f32      | 5258 |  N/A| 223|
+| arm_negate_q31(TODO)      | 237  | N/A | 216|
+| arm_offset_f32(TODO)      | 5258 |  N/A| 223|
 | arm_offset_q7      | 339 | 233(31.3%)| 100|
 | arm_offset_q15      | 369 | 153(58.5%) | 133|
-| arm_offset_q31      |546  | N/A | 216|
-| arm_scale_f32      | 5239 | N/A | 191|
+| arm_offset_q31(TODO)      |546  | N/A | 216|
+| arm_scale_f32(TODO)      | 5239 | N/A | 191|
 | arm_scale_q7      | 377 | 207(45.1%) | 295|
 | arm_scale_q15      | 406 | 207(49%) | 246|
-| arm_scale_q31      | 626 | N/A | 379|
+| arm_scale_q31(TODO)      | 626 | N/A | 379|
 | arm_shift_q7 (left)     | 341 |  190(44.3%) |300 |
 | arm_shift_q15 (left)     | 373 |  185(50.4%) | 236|
-| arm_shift_q31 (left)      | 642|  N/A | 369|
+| arm_shift_q31 (left)(TODO)      | 642|  N/A | 369|
 | arm_shift_q7 (right)      | 143 | 62(56.6%) |246 |
 | arm_shift_q15 (right)      | 141 |  91(35.5%)| 203|
-| arm_shift_q31 (right)      | 145|  N/A |236 |
-| arm_sub_f32      | 5350 | N/A |295 |
+| arm_shift_q31 (right)(TODO)      | 145|  N/A |236 |
+| arm_sub_f32(TODO)      | 5350 | N/A |295 |
 | arm_sub_q7      | 398 |  340(14.6%)| 109|
 | arm_sub_q15      | 428 | 192(55.1%) | 168|
-| arm_sub_q31      | 622 | N/A | 290|
+| arm_sub_q31(TODO)      | 622 | N/A | 290|
 
 #
 
@@ -157,17 +154,17 @@ All Sin and Cosine functions uses tables but with interpolation.
 
 sqrt for float use the built in sqrt function while sqrt for fixed point use  Newton-Raphson algorithm.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
-| arm_sqrt_f32      | 1199 |N/A  | 26|
-| arm_sqrt_q15      | 628 |  N/A| 83|
-| arm_sqrt_q31      | 581 | N/A | 131|
-| arm_cos_f32      | 1853 |  N/A| 53|
-| arm_cos_q15      | 37|N/A  | 36|
-| arm_cos_q31      | 44 |  N/A| 46|
-| arm_sin_f32      | 1779 |  N/A| 55|
-| arm_sin_q15      | 28 |  N/A| 30|
-| arm_sin_q31      | 37 |  N/A| 43|
+| arm_sqrt_f32(TODO)      | 1199 |N/A  | 26|
+| arm_sqrt_q15(TODO)      | 628 |  N/A| 83|
+| arm_sqrt_q31(TODO)      | 581 | N/A | 131|
+| arm_cos_f32(TODO)      | 1853 |  N/A| 53|
+| arm_cos_q15(TODO)      | 37|N/A  | 36|
+| arm_cos_q31(TODO)      | 44 |  N/A| 46|
+| arm_sin_f32(TODO)      | 1779 |  N/A| 55|
+| arm_sin_q15(TODO)      | 28 |  N/A| 30|
+| arm_sin_q31(TODO)      | 37 |  N/A| 43|
 
 
 #
@@ -178,7 +175,7 @@ These Benchmarks are performed on vectors of size 32 (16 complex numbers).
 
 Most of the optimizations are in q15 data type, as float is not supported, and also q31 can't use many from the extended instructions as SIMD instructions and clip.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 | arm_cmplx_conj_f32      |  129|  N/A|181 |
 | arm_cmplx_conj_q31      |  175|  N/A| 173|
@@ -207,7 +204,7 @@ These Benchmarks are performed on vectors of size 32.
 
 Functions that need square root operations, use the functions from FastMath as rms and var.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 | arm_max_f32      | 6748 | N/A | 322|
 | arm_max_q7      |  299| N/A| 283|
@@ -245,7 +242,7 @@ Functions with Fast version, use results or accumulators of size 32 bits instead
 CMSIS DSP Software Library
 ]( http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html)
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 | arm_mat_add_f32      | 2492 | N/A|190  |
 | arm_mat_add_q15      | 216 | 114(47.2%)|124|
@@ -277,7 +274,7 @@ CMSIS DSP Software Library
 
 These Benchmarks are performed on vectors of size 32.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 | arm_copy_f32      | 110 | N/A|189  |
 | arm_copy_q7      | 70 | 45(35.7%)|94|
@@ -349,7 +346,7 @@ Init functions are not considered in benchmarking as they are just copying a few
 
 
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 |   arm_biquad_cas_df1_32x64_q31    |  3859| N/A |4200  |
 |    arm_biquad_cascade_df1_f32   | 44970 |N/A  |  661|
@@ -430,7 +427,7 @@ DCT uses Transform of size 128.
 
 To use most of theses tests, the RAM size has to be changed to 512kb.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 |  arm_cfft_f32(without bit reversal)  | 174295 | N/A |3110 |
 |   arm_cfft_f32(with bit reversal) |  174783|  N/A| 3823|
@@ -451,7 +448,7 @@ For PID functions, it operates on single sample at a time, this results are obta
 
 Init functions are not considered in benchmarking.
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 |  arm_pid_f32 |  29913 | N/A| 2158 |
 |  arm_pid_q15 |  1428 | 1347(5.7%)|  2318 |
@@ -470,7 +467,7 @@ Init functions are not considered in benchmarking.
 #### Interpolation Functions
 
 
-| Function        | Puplino Cycles           | Puplino DSP  Cycles (Imp%)|  ARM M4 Cycles|
+| Function        | CL32Q0 Cycles           | CL32Q0 DSP  Cycles (Imp%)|  ARM M4 Cycles|
 | ------------- |:-------------:| -----:| -----:|
 | arm_linear_interp_f32 |525 | N/A| 55 |
 |  arm_linear_interp_q7  |22| N/A| 80 |
@@ -489,11 +486,6 @@ Init functions are not considered in benchmarking.
 * Benchmark with FPU (when double precision instructions are implemented).
 
 #
-### Credits
-
-The initial port was performerd by Mostafa Saleh, for the lowRISC project in Google Summer of Code (GSoC) 2017.
-
-#
 ### License
 
-This project in under The 3-Clause BSD License.
+This project in under Apache 2.0 License.
