@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 ## CMSIS DSP for CL32Q0
 This is a port of ARM CMSIS DSP [library](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html) to [CL32Q0](http://www.corelink.vip/jcdl_32wriscvtywkzq) microcontroller(RISC-V  RV32IMC ISA).
+=======
+## CMSIS DSD for PULPino
+This is a port of ARM CMSIS DSP [library](http://www.keil.com/pack/doc/CMSIS/DSP/html/index.html) to [PULPino](https://github.com/pulp-platform/pulpino) microcontroller.
+This [project](https://summerofcode.withgoogle.com/projects/?sp-search=Mostafa#5599084384616448) is part of GSOC 2017 
+
+This Repo is still under development
+>>>>>>> Edited README
 
 #
 
